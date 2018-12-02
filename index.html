@@ -1,0 +1,69 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Exercicios HTML</title>
+        <link rel="stylesheet" type="text/css" href="main.css"/>
+    </head>
+    <body>
+        <header>
+            <div class="header-bar">
+                <img src="images/logo.png"/>
+                <h1 class="header-bar__title">Lista de Exercicios HTML</h1>
+            </div>
+        </header>
+        <main>
+            <nav>
+            </nav>
+            <div id="main-container">
+                <section id="main-content">
+                    <h2>Introdução</h2>
+                    <p>
+                        Página destinada a estudos do contéudo do curso WEB MODERNO da COD3R, nela estará contido
+                        todo o conteúdo relacionado ao módulo de HTML, CSS e JS, separado por sessões conforme as aulas forem avançando.
+                    </p>
+                    <h2>Sobre o Autor</h2>
+                    <p>
+                        Leonardo Leitão é graduado em Engenharia Elétrica pela Universidade Federal do Ceará e Mestre em Informática 
+                        Aplicada pela Universidade de Fortaleza, na qual trabalhou com Integração de Redes de Sensores sem Fio e Computação em Nuvem. 
+                        Há doze anos atua na área como desenvolvedor de softwares e atualmente trabalha na DATAPREV como arquiteto,
+                        desenvolvendo sistemas para o INSS. Professor de desenvolvimento de software há quase dez anos, 
+                        iniciou recentemente um projeto de ensinar programação à distância.
+                    </p>
+                </section>
+            </div>
+        </main>
+        
+        <script>
+            const links = ['inicio', 'tags-para-texto']
+            const mainContent = document.querySelector("#main-content")
+            const nav = document.querySelector('nav')
+            links.forEach(link => {
+                const linkElement = document.createElement('a')
+                /* 
+                * formataççao do texto do link para que os arquivos 
+                * com mais de uma paralavra sejam criados no seguinte padrão tags-para-texto.html
+                */
+                linkElement.innerHTML = `${link.split('-').join(' ')}`
+                linkElement.href = `exercicios/${link}.html`
+                if(link === 'inicio') {
+                    linkElement.classList.add('link-active');
+                }
+                linkElement.onclick = e => {
+                    e.preventDefault();
+                    document.querySelectorAll('nav a').forEach(a => {
+                        a.classList.remove('link-active');
+                    })
+                    e.target.classList.add('link-active');
+                    fetch(linkElement.href)
+                        .then(res => res.text())
+                        .then(html => { 
+                            console.log(html)
+                            mainContent.innerHTML = html
+                        })
+                }
+                nav.appendChild(linkElement)
+            })
+        </script>
+    </body>
+</html>
